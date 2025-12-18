@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
               trailing: IconButton(
                 icon: Icon(Icons.delete_outline_rounded),
                 onPressed: () {
-                  accountsController.deleteAccount(acc.accountName);
+                   accountsController.deleteAccount(acc.accountName);
                 },
               ),
             );
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         onPressed: () async {
           final result = await Get.to(QrScanScreen());
           if (result != null && result is OtpAccountModel) {
-             accountsController.addAccount(result);
+                accountsController.addAccount(result);
             //AppSnackbar.success(AppStrings.accountAdded);
           }
         },

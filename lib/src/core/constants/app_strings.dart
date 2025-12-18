@@ -5,5 +5,7 @@ class AppStrings{
   static const String noAccountsTitle = 'No Accounts added yet';
   static const String qrScanTitle = 'QR Scan Successful ✅';
   static const String accountAdded = 'Account Added';
-  static const String invalidAccount = '';
+  static const String invalidAccount = 'Invalid Account';
+  static const String alreadyAdded = 'Already Added';
+  static const String alreadyAddedTitle = 'This account already exists';
 }

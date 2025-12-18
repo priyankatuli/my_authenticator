@@ -9,15 +9,13 @@ class SecureStorageService{
   static const String _keyAccounts = 'otp_account_model'; ///
 
 
-  //save single account
+  //save account
 Future<void> saveAccount(OtpAccountModel account) async {
   final accounts = await getAccounts();
-  //duplicate account name not added in the accounts
-  if (!accounts.any((a) => a.accountName == account.accountName)) {
     accounts.add(account);
-    final encoded = jsonEncode(accounts.map((a) => a.toJson()).toList());
+    final encoded = jsonEncode(accounts.map((a) => a.toJson()).toList()); //encrypted
     await _storage.write(key: _keyAccounts, value: encoded);
-  }
+
 }
 
 //get all accounts

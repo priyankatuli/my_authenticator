@@ -59,10 +59,6 @@ class QrScanController extends GetxController {
     //close screen with result
     Get.back(result: account);
 
-    Get.snackbar(AppStrings.accountAdded,
-        account.accountName,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2));
   }
 
   @override
