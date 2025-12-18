@@ -1,16 +1,18 @@
+import 'package:authenticator/src/core/services/totp_service.dart';
 import 'package:authenticator/src/features/home/controller/account_controller.dart';
+import 'package:authenticator/src/features/otp_generator/controller/totp_ticker_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:authenticator/src/core/constants/app_strings.dart';
 import 'package:authenticator/src/features/qr_scan/screens/qr_scan_screen.dart';
-import 'package:authenticator/src/core/ui/app_snackbar.dart';
 import 'package:authenticator/src/model/otp_account_model.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
-  final accountsController = Get.put(AccountsController());
+  final AccountsController accountsController = Get.put(AccountsController());
+  final TotpTickerController totpTickerController = Get.put(TotpTickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +34,29 @@ class HomeScreen extends StatelessWidget {
           itemCount: accounts.length,
           itemBuilder: (context, index) {
             final acc = accounts[index];
-            return ListTile(
-              title: Text(acc.issuer, style: GoogleFonts.roboto(
-                      fontSize: 17, fontWeight: FontWeight.bold)),
-              subtitle: Text(acc.accountName, style: GoogleFonts.roboto(
+            return Obx((){
+              final otp = TotpService.generate(acc.secret);
+              final remaining = totpTickerController.remainingSeconds.value;
+             return ListTile(
+                title: Text(acc.issuer, style: GoogleFonts.roboto(
+                    fontSize: 17, fontWeight: FontWeight.bold)),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(otp, style: GoogleFonts.roboto(
                       fontSize: 15, fontWeight: FontWeight.bold)),
-              trailing: IconButton(
-                icon: Icon(Icons.delete_outline_rounded),
-                onPressed: () {
-                   accountsController.deleteAccount(acc.accountName);
-                },
-              ),
-            );
+                    Text('$remaining s'),
+               ]
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete_outline_rounded),
+                  onPressed: () {
+                    accountsController.deleteAccount(acc.accountName);
+                  },
+                ),
+              );
+            });
+
           },
         );
       }),
@@ -55,7 +68,6 @@ class HomeScreen extends StatelessWidget {
           final result = await Get.to(QrScanScreen());
           if (result != null && result is OtpAccountModel) {
                 accountsController.addAccount(result);
-            //AppSnackbar.success(AppStrings.accountAdded);
           }
         },
         child: Icon(Icons.add, color: Colors.black, size: 25),

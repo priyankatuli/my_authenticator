@@ -1,5 +1,3 @@
-import 'package:authenticator/src/core/constants/app_strings.dart';
-import 'package:authenticator/src/core/services/secure_storage_service.dart';
 import 'package:authenticator/src/core/utils/parse_otp_ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -34,12 +32,6 @@ class QrScanController extends GetxController {
     //invalid authenticator QR
     if (account == null) {
       debugPrint('Invalid Authenticator QR');
-      /*Get.snackbar(
-        'Invalid QR',
-        'Please scan a valid authenticator QR',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-       */
 
       //allow re-scan
       isProcessing.value = false;
@@ -54,8 +46,8 @@ class QrScanController extends GetxController {
     //stop camera immediately
     cameraController.stop();
 
-    final storage = SecureStorageService();
-    await storage.saveAccount(account);
+    //final storage = SecureStorageService();
+    //await storage.saveAccount(account);
     //close screen with result
     Get.back(result: account);
 

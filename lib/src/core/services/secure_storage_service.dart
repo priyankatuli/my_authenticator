@@ -11,7 +11,7 @@ class SecureStorageService{
 
   //save account
 Future<void> saveAccount(OtpAccountModel account) async {
-  final accounts = await getAccounts();
+    final accounts = await getAccounts();
     accounts.add(account);
     final encoded = jsonEncode(accounts.map((a) => a.toJson()).toList()); //encrypted
     await _storage.write(key: _keyAccounts, value: encoded);
