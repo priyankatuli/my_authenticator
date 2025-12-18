@@ -1,13 +1,12 @@
 import 'dart:convert';
-
 import 'package:authenticator/src/model/otp_account_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SecureStorageService{
 
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = FlutterSecureStorage(); //encrypted storage
 
-  static const String _keyAccounts = 'otp_account_model';
+  static const String _keyAccounts = 'otp_account_model'; ///
 
 
   //save single account

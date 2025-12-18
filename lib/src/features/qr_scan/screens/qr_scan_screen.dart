@@ -20,6 +20,7 @@ class QrScanScreen extends StatelessWidget{
         ),),
       ),
       body: MobileScanner(
+            controller: controller.cameraController,
             onDetect: controller.onDetect
         )
     );

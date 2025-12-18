@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
           final result = await Get.to(QrScanScreen());
           if (result != null && result is OtpAccountModel) {
              accountsController.addAccount(result);
-            AppSnackbar.success(AppStrings.accountAdded);
+            //AppSnackbar.success(AppStrings.accountAdded);
           }
         },
         child: Icon(Icons.add, color: Colors.black, size: 25),
