@@ -17,22 +17,29 @@ class TotpTickerController extends GetxController{
 
 
   void _start(){
-    //_generateOtp(secret);
-    remainingSeconds.value = 30;
+    _updateRemaining(); //initial sync
+    //remainingSeconds.value = 30;
     _timer =  Timer.periodic(Duration(seconds: 1), (_){
       print('Tick: ${remainingSeconds.value}');
-        remainingSeconds.value--;
-        if(remainingSeconds <= 0){
-          remainingSeconds.value = 30;
-          //_generateOtp(secret);
-        }
+
+        _updateRemaining();
+        //remainingSeconds.value--;
+        //if(remainingSeconds <= 0){
+          //remainingSeconds.value = 30;
+
+       // }
     });
   }
 
+  void _updateRemaining(){
+    final now = DateTime.now().millisecondsSinceEpoch ~/ 1000; //unix seconds
+    remainingSeconds.value =  30 - (now%30); // real time sync hobe
+  }
 
   @override
   void onClose(){
      _timer?.cancel();
      super.onClose();
   }
+
 }

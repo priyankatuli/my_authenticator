@@ -1,4 +1,5 @@
 import 'package:authenticator/src/core/utils/parse_otp_ui.dart';
+import 'package:authenticator/src/core/widgets/app_snackbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -45,9 +46,6 @@ class QrScanController extends GetxController {
 
     //stop camera immediately
     cameraController.stop();
-
-    //final storage = SecureStorageService();
-    //await storage.saveAccount(account);
     //close screen with result
     Get.back(result: account);
 

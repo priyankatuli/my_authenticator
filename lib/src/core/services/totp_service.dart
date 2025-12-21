@@ -8,7 +8,7 @@ class TotpService{
       interval: 30,
       length: 6,
       algorithm: Algorithm.SHA1,
-      isGoogle: true
+      isGoogle: true //ensure google authenticator compatibility
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:authenticator/src/core/services/totp_service.dart';
 import 'package:authenticator/src/features/home/controller/account_controller.dart';
 import 'package:authenticator/src/features/otp_generator/controller/totp_ticker_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:authenticator/src/core/constants/app_strings.dart';
@@ -34,31 +35,37 @@ class HomeScreen extends StatelessWidget {
           itemCount: accounts.length,
           itemBuilder: (context, index) {
             final acc = accounts[index];
-            return Obx((){
+            return Obx((){ //otp & remaining only depends on remaining seconds
               final otp = TotpService.generate(acc.secret);
               final remaining = totpTickerController.remainingSeconds.value;
-             return ListTile(
-                title: Text(acc.issuer, style: GoogleFonts.roboto(
-                    fontSize: 17, fontWeight: FontWeight.bold)),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(otp, style: GoogleFonts.roboto(
-                      fontSize: 15, fontWeight: FontWeight.bold)),
-                    Text('$remaining s'),
-               ]
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.delete_outline_rounded),
-                  onPressed: () {
-                    accountsController.deleteAccount(acc.accountName);
-                  },
-                ),
-              );
+               return ListTile(
+                 title: Text(acc.issuer, style: GoogleFonts.roboto(
+                     fontSize: 17, fontWeight: FontWeight.bold)),
+                 subtitle: Column(
+                     crossAxisAlignment: CrossAxisAlignment.start,
+                     children: [
+                       GestureDetector(
+                         onLongPress: (){
+                           Clipboard.setData(ClipboardData(text: otp));
+                           Get.snackbar('Copied', 'Otp Copied',
+                             snackPosition: SnackPosition.BOTTOM
+                           );
+                         },
+                       child: Text(otp, style: GoogleFonts.roboto(
+                           fontSize: 15, fontWeight: FontWeight.bold)),
+                       ),
+                       Text('$remaining s'),
+                     ]
+                 ),
+                 trailing: IconButton(
+                   icon: Icon(Icons.delete_outline_rounded,color: Colors.black54,),
+                   onPressed: () {
+                     accountsController.deleteAccount(acc.accountName);
+                   },
+                 ),
+               );
+             });
             });
-
-          },
-        );
       }),
       floatingActionButton: FloatingActionButton(
         elevation: 3,
