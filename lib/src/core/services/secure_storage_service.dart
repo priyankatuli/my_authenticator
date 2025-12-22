@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorageService{
 
   final FlutterSecureStorage _storage = FlutterSecureStorage(); //encrypted storage
-
   static const String _keyAccounts = 'otp_account_model'; ///
 
 
@@ -15,7 +14,6 @@ Future<void> saveAccount(OtpAccountModel account) async {
     accounts.add(account);
     final encoded = jsonEncode(accounts.map((a) => a.toJson()).toList()); //encrypted
     await _storage.write(key: _keyAccounts, value: encoded);
-
 }
 
 //get all accounts
@@ -32,8 +30,7 @@ Future<List<OtpAccountModel>> getAccounts() async{
      accounts.removeWhere((a) => a.accountName == accountName);
      final encoded = jsonEncode(accounts.map((a) => a.toJson()).toList());
      await _storage.write(key: _keyAccounts, value: encoded);
-
-  }
+}
 
   //clear all accounts
 Future<void> clearAllAccounts() async{

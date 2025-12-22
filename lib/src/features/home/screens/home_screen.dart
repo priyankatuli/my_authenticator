@@ -1,6 +1,6 @@
 import 'package:authenticator/src/core/services/totp_service.dart';
 import 'package:authenticator/src/features/home/controller/account_controller.dart';
-import 'package:authenticator/src/features/otp_generator/controller/totp_ticker_controller.dart';
+import 'package:authenticator/src/features/home/controller/totp_ticker_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
                        GestureDetector(
                          onLongPress: (){
                            Clipboard.setData(ClipboardData(text: otp));
-                           Get.snackbar('Copied', 'Otp Copied',
+                           Get.snackbar('Copied to clipboard', '',
                              snackPosition: SnackPosition.BOTTOM
                            );
                          },
