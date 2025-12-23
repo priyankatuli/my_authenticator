@@ -8,4 +8,6 @@ class AppStrings{
   static const String invalidAccount = 'Invalid Account';
   static const String alreadyAdded = 'Already Added';
   static const String alreadyAddedTitle = 'This account already exists';
+  static const String deleteTitle = 'Deleted Successfully';
+  static const String copyText = 'Copied to clipboard';
 }

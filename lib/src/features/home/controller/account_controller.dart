@@ -1,4 +1,5 @@
 import 'package:authenticator/src/core/constants/app_strings.dart';
+import 'package:authenticator/src/core/widgets/app_snackbar.dart';
 import 'package:get/get.dart';
 import 'package:authenticator/src/model/otp_account_model.dart';
 import 'package:authenticator/src/core/services/secure_storage_service.dart';
@@ -23,11 +24,9 @@ class AccountsController extends GetxController {
     //duplicate check
     final isDuplicate = accounts.any((a) => a.accountName == account.accountName);
     if (isDuplicate) {
-      Get.snackbar(
+      AppSnackBar.error(
         AppStrings.alreadyAdded,
-        AppStrings.alreadyAddedTitle,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
+        message: AppStrings.alreadyAddedTitle,
       );
       return;
     } else {
@@ -35,14 +34,14 @@ class AccountsController extends GetxController {
       await storage.saveAccount(account);
       //then update the reactive list
       accounts.add(account);
-      Get.snackbar(AppStrings.accountAdded,
-          account.accountName,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 2));
+      AppSnackBar.success(AppStrings.accountAdded,
+        message: account.accountName,
+      );
     } // reactive update
   }
   void deleteAccount(String accountName) async {
     await storage.deleteAccount(accountName);
     accounts.removeWhere((a) => a.accountName == accountName);
+    AppSnackBar.success(AppStrings.deleteTitle,message: accountName);
   }
 }
