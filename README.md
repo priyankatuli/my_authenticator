@@ -10,7 +10,7 @@ A Flutter-based Authenticator application that generates Time-based One-Time Pas
 - Clean and user-friendly UI
 - Works completely offline after setup
 
-## Tech Stack
+## 🛠️ Tech Stack
 - Flutter
 - Dart
 - GetX - State Management & Navigation
