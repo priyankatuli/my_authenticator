@@ -39,6 +39,7 @@ class AccountsController extends GetxController {
       );
     } // reactive update
   }
+
   void deleteAccount(String accountName) async {
     await storage.deleteAccount(accountName);
     accounts.removeWhere((a) => a.accountName == accountName);
