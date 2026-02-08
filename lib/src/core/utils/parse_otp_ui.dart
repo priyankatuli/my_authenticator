@@ -31,7 +31,6 @@ OtpAccountModel? parseOtpUri(String rawQrValue){
   }catch(e){
     return null;
   }
-
 }
 
 

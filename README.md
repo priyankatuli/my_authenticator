@@ -1,5 +1,4 @@
 # 🔐 Authenticator App
-
 A Flutter-based Authenticator application that generates Time-based One-Time Passwords (TOTP) for secure two-factor authentication (2FA).
 
 ## ⚙️ Installation
@@ -40,5 +39,4 @@ flutter build apk --release
 - flutter_secure_storage
 - mobile_scanner
 - otp
-
 

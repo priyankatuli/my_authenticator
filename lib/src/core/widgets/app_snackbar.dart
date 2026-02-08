@@ -15,7 +15,6 @@ class AppSnackBar{
   }
 
   static void error (String title, {String message = '', Duration duration = const Duration(seconds: 2)}){
-
     Get.snackbar(
         title,
         message,

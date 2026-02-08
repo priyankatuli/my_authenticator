@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
-
 
 class TotpTickerController extends GetxController{
 
@@ -15,13 +13,11 @@ class TotpTickerController extends GetxController{
     _start();
   }
 
-
   void _start(){
     _updateRemaining(); //initial sync
     //remainingSeconds.value = 30;
     _timer =  Timer.periodic(Duration(seconds: 1), (_){
       print('Tick: ${remainingSeconds.value}');
-
         _updateRemaining();
         //remainingSeconds.value--;
         //if(remainingSeconds <= 0){
