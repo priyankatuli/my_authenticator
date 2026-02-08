@@ -1,4 +1,4 @@
-# 🔐 Authenticator App
+# 🔐 My Authenticator 
 A Flutter-based Authenticator application that generates Time-based One-Time Passwords (TOTP) for secure two-factor authentication (2FA).
 
 ## ⚙️ Installation
