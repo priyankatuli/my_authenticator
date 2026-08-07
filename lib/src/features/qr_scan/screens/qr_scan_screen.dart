@@ -1,10 +1,5 @@
-import 'package:authenticator/src/core/constants/app_strings.dart';
-import 'package:authenticator/src/features/qr_scan/controller/qr_scan_controller.dart';
-import 'package:flutter/material.dart';
+import 'package:authenticator/src/app_config/imports/import.dart';
 
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
 
 class QrScanScreen extends StatelessWidget{
   const QrScanScreen({super.key});

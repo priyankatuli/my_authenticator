@@ -1,8 +1,4 @@
-import 'package:authenticator/src/core/constants/app_strings.dart';
-import 'package:authenticator/src/core/widgets/app_snackbar.dart';
-import 'package:get/get.dart';
-import 'package:authenticator/src/model/otp_account_model.dart';
-import 'package:authenticator/src/core/services/secure_storage_service.dart';
+import 'package:authenticator/src/app_config/imports/import.dart';
 
 class AccountsController extends GetxController {
   final storage = SecureStorageService();
@@ -21,7 +17,7 @@ class AccountsController extends GetxController {
 
   void addAccount(OtpAccountModel account) async {
 
-    //duplicate check
+    //----------------duplicate check--------------------------////
     final isDuplicate = accounts.any((a) => a.accountName == account.accountName);
     if (isDuplicate) {
       AppSnackBar.error(
@@ -30,9 +26,9 @@ class AccountsController extends GetxController {
       );
       return;
     } else {
-      //save to storage
+      //----save to storage------//
       await storage.saveAccount(account);
-      //then update the reactive list
+      //-------then update the reactive list-----------------///
       accounts.add(account);
       AppSnackBar.success(AppStrings.accountAdded,
         message: account.accountName,

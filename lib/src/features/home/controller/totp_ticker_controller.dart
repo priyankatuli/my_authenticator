@@ -1,5 +1,5 @@
-import 'dart:async';
-import 'package:get/get.dart';
+
+import 'package:authenticator/src/app_config/imports/import.dart';
 
 class TotpTickerController extends GetxController{
 

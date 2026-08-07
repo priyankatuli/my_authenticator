@@ -1,8 +1,7 @@
-import 'package:authenticator/src/app_config/build/my_app.dart';
-import 'package:flutter/material.dart';
+
+import 'package:authenticator/src/app_config/imports/import.dart';
 
 void main() {
-
   runApp(const MyApp());
 }
 

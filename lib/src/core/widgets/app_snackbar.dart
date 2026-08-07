@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
+import 'package:authenticator/src/app_config/imports/import.dart';
 
 class AppSnackBar{
 
@@ -19,7 +19,7 @@ class AppSnackBar{
         title,
         message,
         snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.blueGrey.shade400,
+        backgroundColor: Colors.red,
         colorText: Colors.white,
         duration: duration
     );

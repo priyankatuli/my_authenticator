@@ -1,4 +1,5 @@
-import 'package:authenticator/src/model/otp_account_model.dart';
+import 'package:authenticator/src/app_config/imports/import.dart';
+
 
 OtpAccountModel? parseOtpUri(String rawQrValue){
   try{

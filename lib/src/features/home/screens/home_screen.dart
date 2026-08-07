@@ -1,20 +1,12 @@
-import 'package:authenticator/src/core/services/totp_service.dart';
-import 'package:authenticator/src/core/widgets/app_snackbar.dart';
-import 'package:authenticator/src/features/home/controller/account_controller.dart';
-import 'package:authenticator/src/features/home/controller/totp_ticker_controller.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:authenticator/src/core/constants/app_strings.dart';
-import 'package:authenticator/src/features/qr_scan/screens/qr_scan_screen.dart';
-import 'package:authenticator/src/model/otp_account_model.dart';
+
+import 'package:authenticator/src/app_config/imports/import.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
 
   final AccountsController accountsController = Get.put(AccountsController());
-  final TotpTickerController totpTickerController = Get.put(TotpTickerController());
+  final TotpTickerController totpTickerController = Get.put(
+      TotpTickerController());
 
   @override
   Widget build(BuildContext context) {
@@ -33,50 +25,90 @@ class HomeScreen extends StatelessWidget {
                   style: GoogleFonts.roboto(fontSize: 17)));
         }
         return ListView.builder(
-          itemCount: accounts.length,
-          itemBuilder: (context, index) {
-            final acc = accounts[index];
-            return Obx((){ //otp & remaining only depends on remaining seconds
-              final otp = TotpService.generate(acc.secret);
-              final remaining = totpTickerController.remainingSeconds.value;
-               return ListTile(
-                 title: Text(acc.issuer, style: GoogleFonts.roboto(
-                     fontSize: 17, fontWeight: FontWeight.bold)),
-                 subtitle: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       GestureDetector(
-                         onLongPress: (){
-                           Clipboard.setData(ClipboardData(text: otp));
-                           AppSnackBar.success(AppStrings.copyText,message: '');
-                         },
-                       child: Text(otp, style: GoogleFonts.roboto(
-                           fontSize: 15, fontWeight: FontWeight.bold)),
-                       ),
-                       Text('$remaining s'),
-                     ]
-                 ),
-                 trailing: IconButton(
-                   icon: Icon(Icons.delete_outline_rounded,color: Colors.black54,),
-                   onPressed: () {
-                     accountsController.deleteAccount(acc.accountName);
-                   },
-                 ),
-               );
-             });
-            });
+            itemCount: accounts.length,
+            itemBuilder: (context, index) {
+              final acc = accounts[index];
+              return Obx(() { //otp & remaining only depends on remaining seconds
+                final otp = TotpService.generate(acc.secret);
+                final remaining = totpTickerController.remainingSeconds.value;
+                return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 6,
+                    offset: const Offset(0, 2),),
+                    ],
+                ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(acc.issuer,style: GoogleFonts.roboto(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold
+                      ),),
+                      SizedBox(height: 8,),
+                      Row(
+                        children: [
+                          Expanded(
+                              child: GestureDetector(
+                                onLongPress: () {
+                                  Clipboard.setData(ClipboardData(text: otp));
+                                  AppSnackBar.success(AppStrings.copyText, message: '');
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(horizontal: 10,vertical: 12),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.blueGrey.shade50
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(otp,style: GoogleFonts.roboto(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),),
+                                      SizedBox(width: 6,),
+                                      Icon(Icons.copy_outlined,size: 14,color: Colors.grey,)
+                                    ],
+                                  ),
+                                ),
+                              )
+                          ),
+                          SizedBox(width: 8,),
+                          IconButton(onPressed: (){
+                            accountsController.deleteAccount(acc.accountName);
+                          }, icon: Icon(Icons.delete_rounded, color: Colors.black54,))
+                        ],
+                      ),
+                      SizedBox(height: 5,),
+                      Text('Remaining Time: $remaining s',style: GoogleFonts.roboto(
+                           fontSize: 14,
+                           fontWeight: FontWeight.bold
+                      ),)
+                    ],
+                  ),
+                );
+              });
+            }
+        );
       }),
       floatingActionButton: FloatingActionButton(
         elevation: 3,
-        backgroundColor: Colors.blueGrey.shade100,
+        backgroundColor: Colors.blueGrey.shade200,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
         onPressed: () async {
           final result = await Get.to(QrScanScreen());
           if (result != null && result is OtpAccountModel) {
-                accountsController.addAccount(result);
+            accountsController.addAccount(result);
           }
         },
-        child: Icon(Icons.add, color: Colors.black, size: 25),
+        child: Icon(Icons.add_circle_outline_outlined, color: Colors.white, size: 25),
       ),
     );
   }
